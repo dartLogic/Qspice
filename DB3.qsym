@@ -1,0 +1,17 @@
+ÿØÿÛ«symbol
+  «type: X»
+  «description: Silicon Diode»
+  «library file: |.subckt db3 C E\n.param bVce={Vk-Delta_V} bVcb={Vk} Re={Rs/2}\nD1 bv P001 De0\nD2 bv ev De\nD3 bv ev Der\nVae P001 ev 0\nD4 bv N001 Dc0\nVac N001 cv 0\nD5 bv cv Dc\nD6 bv cv Dcr\nB2 ev bv I=(uramp(i(vac)*2)*af+ise)/MM(v(ev,bv),bVcb,nMc)-ise \nB3 cv bv I=(uramp(i(vae)*2)*af+ise)/MM(v(cv,bv),bVcb,nMc)-ise \n*C2 ev bv 2p \n*C3 cv bv 2p \nR1 C cv {Re}\nR2 ev E {Re}\nR3 C E {bVcb/Ibo}\n.model De0 d is={is/2/af} cjo=1f\n.model De d is={is/2/af} tt={2*tf}\n.model Der d is={ise} n={ne} cjo=200p m=1\n.model Dc0 d is={is/2/af} cjo=1f\n.model Dc d is={is/2/af} tt={2*tf}\n.model Dcr d is={ise} n={ne} cjo=200p m=1\n.param af=bf/(bf+1)\n.param nMc={log(1+Bf)/log(bVcb/(bVce-0.6))}\n.func MM(x,y,z) {1+1f-(limit(x,0,y)/y)**z}\n.param BF=5 \n.param is=10f ise=100p ne=2\n.param tf=23n \n.ends db3»
+  «shorted pins: false»
+  «line (0,-100) (-200,-100) 0 0 0x1000000 -1 -1»
+  «line (0,50) (200,50) 0 0 0x1000000 -1 -1»
+  «line (0,200) (0,50) 0 0 0x1000000 -1 -1»
+  «line (0,-200) (0,-100) 0 0 0x1000000 -1 -1»
+  «triangle (0,-100) (200,-100) (100,50) 0 0 0x1000000 0x2000000 -1 -1»
+  «triangle (-100,-100) (-200,50) (0,50) 0 0 0x1000000 0x2000000 -1 -1»
+  «text (100,200) 1 6 0 0x1000000 -1 -1 "X2"»
+  «text (300,150) 0.63 0 0 0x1000000 -1 -1 "DB3"»
+  «text (1000,100) 0.5 0 2 0x1000000 -1 -1 " Vk=32 Delta_V=19V Ibo=10uA Rs=10"»
+  «pin (0,200) (80,-20) 0.5 13 0 0x0 -1 "C"»
+  «pin (0,-200) (90,0) 0.5 14 0 0x0 -1 "E"»
+»

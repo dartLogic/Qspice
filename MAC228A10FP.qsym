@@ -1,0 +1,22 @@
+ÿØÿÛ«symbol
+  «type: X»
+  «description: triac; bidirectional triode thyristor»
+  «library file: |.subckt MAC228A10FP MT2 gate MT1\nX1 MT2 gate MT1 Triac params: Vdrm=800v Idrm=10u Ih=15ma dVdt=25e6 Ton=1.5u Igt=5ma Vgt=2.0v Vtm=1.8v Itm=11\n.ends\n.subckt Triac MT2 gate MT1 params: Vdrm=400v Idrm=10u Ih=6ma dVdt=50e6 Igt=20ma Vgt=0.9v Vtm=1.3v Itm=17 Ton=1.5u\nStriac MT2 MT20 cntrol 0 Vswitch\nDak1 MT20 MT22 Dak OFF\nVIak MT22 MT1 0\nStriacr MT2 MT23 cntrolr 0 Vswitch\nDka1 MT21 MT23 Dak OFF\nVIka MT1 MT21 0\nEmon dvdt0 0 TABLE {ABS(V(MT2,MT1))} (0 0) (2000 2000)\nCdVdt dvdt0 dvdt1 100pfd\nRdlay dvdt1 dvdt2 1k\nVdVdt dvdt2 MT1 DC 0.0\nEdVdt condvdt 0 TABLE {i(vdVdt)-100p*dVdt} (0 0 ) (.1m 10)\nRdVdt condvdt 0 1meg\nRseries gate gate1 {(Vgt-0.65)/Igt}\nRshunt gate1 gate2 {0.65/Igt}\nDgkf gate1 gate2 Dgk\nDgkr gate2 gate1 Dgk\nVIgf gate2 MT1 DC 0.0\nEgate congate 0 TABLE {(ABS(i(VIgf))-0.95*Igt)} (0 0) (1m 10)\nRgate congate 0 1meg\nEmain1 main1 0 TABLE {i(VIak)-Ih+5e-3*i(VIgf)/Igt} (0 0) (.1m 1)\nRmain1 main1 0 1meg\nEmain2 main2 0 TABLE {v(MT2,MT1)-(Ih*Vtm/Itm)} (0 0) (.1m 1)\nRmain2 main2 0 1meg\nEmain3 cnhold 0 TABLE {v(main1,0)*v(main2,0)} (0 0 (1 10)\nRmain3 cnhold 0 1meg\nEmain1r main1r 0 TABLE {i(VIka)-Ih-5e-3*i(VIgf)/Igt} (0 0) (.1m 1)\nRmain1r main1r 0 1meg\nEmain2r main2r 0 TABLE {v(MT1,MT2)-(Ih*Vtm/Itm)} (0 0) (.1m 1)\nRmain2r main2r 0 1meg\nEmain3r cnholdr 0 TABLE {v(main1r,0)*v(main2r,0)} (0 0 (1 10)\nRmain3r cnholdr 0 1meg\nEmain4 main4 0 table {(1.0-ABS(i(VIgf))/Igt)} (0 0) (1 1)\nRmain4 main4 0 1meg\nEmain5 cnmain 0 table {v(mt2,mt1)-1.05*Vdrm*v(main4)} (0 0) (1 10)\nRmain5 cnmain 0 1meg\nEmain5r cnmainr 0 table {v(mt1,mt2)-1.05*Vdrm*v(main4)} (0 0) (1 10)\nRmain5r cnmainr 0 1meg\nEonoff contot 0 TABLE {v(cnmain)+v(congate)+v(cnhold)+v(condvdt)} (0 0) (10 10)\nRton contot dlay1 825\nDton dlay1 cntrol Delay\nRtoff contot dlay2 {2.9E-3/Ton}\nDtoff cntrol dlay2 Delay\nCton cntrol 0 {Ton/454}\nEonoffr contotr 0 TABLE {v(cnmainr)+v(congate)+v(cnholdr)+v(condvdt)} (0 0) (10 10)\nRtonr contotr dlayr1 825\nDtonr dlayr1 cntrolr Delay\nRtoffr contotr dlayr2 {2.9E-3/Ton}\nDtoffr cntrolr dlayr2 Delay\nCtonr cntrolr 0 {Ton/454}\n.MODEL Vswitch vswitch (Ron = {(Vtm-0.7)/Itm}, Roff = {1.75E-3*Vdrm/Idrm}, Von = 5.0, Voff = 1.5)\n.MODEL Dgk D (Is=1E-16 Cjo=50pf Rs=5)\n.MODEL Delay D (Is=1E-12 Cjo=5pf Rs=0.01)\n.MODEL Dak D (Is=4E-11 Cjo=5pf)\nRfloat gate MT1 1e10\n.ends»
+  «shorted pins: false»
+  «line (0,200) (0,75) 0 0 0x1000000 -1 -1»
+  «line (0,-75) (0,-200) 0 0 0x1000000 -1 -1»
+  «line (-200,-200) (-153,-200) 0 0 0x1000000 -1 -1»
+  «line (-153,-200) (-63,-68) 0 0 0x1000000 -1 -1»
+  «line (-65,-35) (-65,-45) 10 0 0x1000000 -1 -1»
+  «line (65,35) (65,45) 10 0 0x1000000 -1 -1»
+  «rect (-10,75) (140,45) 0 10 0 0x1000000 0x3000000 -1 0 -1»
+  «rect (10,-75) (-140,-45) 0 10 0 0x1000000 0x3000000 -1 0 -1»
+  «triangle (-65,-35) (-140,75) (10,75) 10 0 0x1000000 0x3000000 -1 -1»
+  «triangle (65,35) (-10,-75) (140,-75) 10 0 0x1000000 0x3000000 -1 -1»
+  «text (25,125) 0.5 7 0 0x1000000 -1 -1 "Tr"»
+  «text (25,-175) 0.735 7 0 0x1000000 -1 -1 "MAC228A10FP"»
+  «text (-25,125) 0.5 11 3 0x1000000 -1 -1 "V/A"»
+  «pin (0,200) (0,0) 0.5 0 0 0x0 -1 "MT2"»
+  «pin (-200,-200) (0,0) 0.5 0 0 0x0 -1 "G"»
+  «pin (0,-200) (0,0) 0.5 0 0 0x0 -1 "MT1"»
+»

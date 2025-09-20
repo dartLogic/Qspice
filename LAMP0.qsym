@@ -1,0 +1,14 @@
+ÿØÿÛ«symbol
+  «type: X»
+  «description: Machine generated symbol for LAMP0»
+  «library file: |.SUBCKT lamp0 1 2\n.param TCOLD=25 TAMB=25 n=1.2\n.PARAM INOM=PNOM/UNOM\n.PARAM RHOT=UNOM/INOM\n.PARAM TCOLD1=TCOLD+273\n.PARAM TEMP1=TCOLD1+(TAMB-(TCOLD1-273))\n.PARAM THOT=TCOLD1*(RHOT/RCOLD)**(1/n)\n.PARAM ALPHA=MIN(0.8, 0.8*(THOT/3300))\n.PARAM POPTNOM=ALPHA*PNOM\n.PARAM RTH=(THOT-TCOLD1)/(PNOM*(1-ALPHA))\n.PARAM CTAU={IF((RTH<=1m), 1m, (TAU/RTH))}\n.PARAM TAU2=0.1*TAU\n.PARAM C0=1F\n.PARAM L0=10nH\nL1 1 N001 {L0} Rpar=10\nCS N001 2 {C0}\nG1 N001 3 VALUE={V(1,2)/V(res)}\nV1 3 2 0\nG4 0 ptot VALUE={I(V1)*V(1,2)}\nR4 ptot 0 1\nBG3 0 popt i=V(ptot)*MIN(0.8,(ALPHA*(V(tfil)**4-V(tamb)**4)/(THOT**4-V(tamb)**4))) Rpar=1 Cpar=1u\nG2 0 tfil VALUE={V(ptot)-V(popt)}\nRTH1 tfil tamb {Rth}\nCTAU1 tfil tamb {CTAU}\nVTAMB tamb 0 {TEMP1}\nBG6 0 poptavg i=V(popt) Rpar=1 Cpar=1u\nBG5 0 res i=RCOLD*(V(tfil)/TCOLD1)**n Rpar=1 ic={RCOLD}\nCTAU2 poptavg 0 {TAU2}\nE1 tbulb 0 VALUE={V(tamb)-273}\nE2 tsock 0 VALUE={V(tamb)-273}\nE3 tfil1 0 VALUE={V(tfil)-273}\n.ends lamp0»
+  «shorted pins: false»
+  «line (-140,-140) (140,140) 7 0 0xff -1 -1»
+  «line (-140,140) (140,-140) 7 0 0xff -1 -1»
+  «ellipse (-200,-200) (200,200) 0 7 0 0xff 0x1000000 -1 -1»
+  «text (100,250) 1 6 0 0x1000000 -1 -1 "X1"»
+  «text (400,150) 0.735 0 0 0x1000000 -1 -1 "LAMP0"»
+  «text (550,500) 0.5 0 0 0x1000000 -1 -1 " UNOM=220 PNOM=100 Rcold=38 TAU=2"»
+  «pin (0,200) (0,0) 0.5 13 0 0xffffff -1 "1"»
+  «pin (0,-200) (0,0) 0.5 14 0 0xffffff -1 "2"»
+»
